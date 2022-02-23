@@ -1,15 +1,48 @@
-import pyrealsense2 as rs
-import numpy as np
-import cv2
+#!/home/ziye01/miniconda3/envs/cg/bin/python3
 
-#!/usr/bin/python3.6
-
+from csv import reader
 import pyrealsense2 as rs
 import numpy as np
 import cv2
 import sys
-#import matplotlib.pyplot as plt
-#from control_api import *
+
+
+def batch_quat_to_mat(quat):
+    """Convert quaternion coefficients to rotation matrix.
+    For batch size = 1, batch_quat_to_mat achieve comparable speed
+    with transforms3d.quaternions.quat2mat. For large batch size,
+    batch_quat_to_mat is about 30 times faster than
+    transforms3d.quaternions.quat2mat.
+
+    Args:
+        quat: numpy array of batch_size x 4.
+    Returns:
+        Rotation numpy array of batch_size x 3 x 3,
+                 matrix corresponding to the quaternion.
+    """
+
+    batch_size = quat.shape[0]
+    quat = quat / np.linalg.norm(quat + 1e-8, axis=1, keepdims=True)
+    w, x, y, z = quat[:, 0], quat[:, 1], quat[:, 2], quat[:, 3]
+    w2, x2, y2, z2 = w ** 2, x ** 2, y ** 2, z ** 2
+    wx, wy, wz = w * x, w * y, w * z
+    xy, xz, yz = x * y, x * z, y * z
+
+    rotMat = np.stack(
+        [
+            w2 + x2 - y2 - z2,
+            2 * xy - 2 * wz,
+            2 * wy + 2 * xz,
+            2 * wz + 2 * xy,
+            w2 - x2 + y2 - z2,
+            2 * yz - 2 * wx,
+            2 * xz - 2 * wy,
+            2 * wx + 2 * yz,
+            w2 - x2 - y2 + z2,
+        ],
+        axis=1,
+    ).reshape(batch_size, 3, 3)
+    return rotMat
 
 
 # 将旋转矩阵r与位移矩阵t拼接生成矩阵H
@@ -40,7 +73,7 @@ class calibration(object):
             self.objp[i,0],self.objp[i,1]=y,x # 先进行行，后进行类
         # Arrays to store object points and image points from all the images
         self.objpoints=[]   # self.objpoints.append(self.objp) 计算外部矩阵时，需要使用的容器
-        self.imgpoints=[]   # 
+        self.imgpoints=[]   # 角点列表，外面再套一层次
         self.images=[]      # 图像列表
         self.criteria=(cv2.TERM_CRITERIA_EPS+cv2.TERM_CRITERIA_MAX_ITER,30,0.001)
 
@@ -63,7 +96,7 @@ class calibration(object):
                 #cv::InputArray image, // 输入图像
                 #cv::InputOutputArray corners, // 角点（既作为输入也作为输出）
                 #cv::Size winSize, // 区域大小为 NXN; N=(winSize*2+1)
-                #cv::Size zeroZone, // 类似于winSize，但是总具有较小的范围，Size(-1,-1)表示忽略
+                #cv::Size zeroZone, // 类似于winSize，但是总具有较小的范围，Size(-1,-1)表示忽略, 死区
                 #cv::TermCriteria criteria // 停止优化的标准
                 cv2.cornerSubPix(self.gray,corners,(11,11),(-1,-1),self.criteria)
                 corners2=corners
@@ -155,7 +188,7 @@ def get_pos_rot_from_xyzq(xyzq):
     pos = np.array([xyzq[0], xyzq[1], xyzq[2]])     #x,y,z
     rot = batch_quat_to_mat(np.array([[xyzq[3],xyzq[4], xyzq[5], xyzq[6]]]))[0]   # w,x,y,z
     return pos, rot 
-'''
+
 class CameraL(object):
     def __init__(self,indexCam=0):
         self.pipeline=rs.pipeline()   # 配置管道流
@@ -241,3 +274,20 @@ class CameraL(object):
 if __name__=="__main__":
     cam=CameraL()
     calib=calibration(cam.mtx,pattern_size=(8,6))
+
+    for i in range(10):
+        color,depth,_,_=cam.get_data()
+        cv2.imshow("vis",color)
+        action=cv2.waitKey(-1)
+       
+        if action &0xFF==ord('q'):
+            break
+        if action &0xFF==ord('s'):
+            print("saving the {}-th data".format(i))
+            #pos, rot = get_pos_rot_from_xyzq(flexiv.get_tcp_pose())
+            #np.save('./save/kinova/t_{}.npy'.format(i), pos)
+            #np.save('./save/kinova/r_{}.npy'.format(i), rot)
+            cv2.imwrite('../save/img/{}.jpg'.format(i), color)
+            continue
+    
+    #for i in range(10):
