@@ -1,11 +1,13 @@
 #!/home/ziye01/miniconda3/envs/cg/bin/python3
-
+import sys
+sys.path.append("/home/jaco/kinova/kinova_ws/src/kinova_client/scripts")
 from csv import reader
 import pyrealsense2 as rs
 import numpy as np
 import cv2
 import sys
-
+import csv
+from read_kinova import mvig_kinova_reader
 
 def batch_quat_to_mat(quat):
     """Convert quaternion coefficients to rotation matrix.
@@ -45,7 +47,6 @@ def batch_quat_to_mat(quat):
     return rotMat
 
 
-# 将旋转矩阵r与位移矩阵t拼接生成矩阵H
 def rodrigues_trans2trmat(tcp_r,tcp_t):
     H=np.zeros((4,4))
     H[:3,:3]=tcp_r
@@ -53,9 +54,9 @@ def rodrigues_trans2trmat(tcp_r,tcp_t):
     H[3,3]=1
     return H
 
-# 摄像头标定类
+
 class calibration(object):
-    def __init__(self,mtx,pattern_size=(8,6),square_size=0.015,hand_eye="EIH"):
+    def __init__(self,mtx,pattern_size=(7,4),square_size=0.035,hand_eye="EIH"):
         self.mtx=mtx       #内部参数
         self.pattern_size=pattern_size  #角点长宽
         self.square_size=square_size    #方格长宽单位m
@@ -65,7 +66,7 @@ class calibration(object):
         self.externMat=[]               #外部参数
     
     def init_calib(self):
-        self.objp=np.zeros((self.pattern_size[0]*self.pattern_size[1],2),np.float32)
+        self.objp=np.zeros((self.pattern_size[0]*self.pattern_size[1],3),np.float32)
         self.objp[:,:2]=self.square_size*np.mgrid[0:self.pattern_size[0],0:self.pattern_size[1]].T.reshape(-1,2)
         #print(self.objp)
         for i in range(self.pattern_size[0]*self.pattern_size[1]):
@@ -82,16 +83,18 @@ class calibration(object):
         img=color
         # 转变成灰度图，计算亚像素时需要使用
         self.gray=cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+        #cv2.imshow('findCorners',self.gray)
         # 找出角点
         # img 彩色图
         # pattern_size [8,6] w=8,h=6  [0,0] [0,1] .... 回头用方向验证下,按照上面的self.obj,那么方向是先每一列的
         # CV_CALIB_CB_ADAPTIVE_THRESH：该函数的默认方式是根据图像的平均亮度值进行图像 二值化，设立此标志位的含义是采用变化的阈值进行自适应二值化
         ret,corners=cv2.findChessboardCorners(img,self.pattern_size,None,
                                               cv2.CALIB_CB_ADAPTIVE_THRESH)
+        self.objpoints.append(self.objp)
+        corners2=corners
         # 获取亚像素角点
         if ret==True:
-            self.objpoints.append(self.objp)
-            corners2=corners
+           
             if(cv2.__version__).split('.')=='2':
                 #cv::InputArray image, // 输入图像
                 #cv::InputOutputArray corners, // 角点（既作为输入也作为输出）
@@ -103,11 +106,13 @@ class calibration(object):
             else:
                 corners2=cv2.cornerSubPix(self.gray,corners,(11,11),(-1,-1),self.criteria)
         # 得到角点的列表
+        
         self.imgpoints.append(corners2)
         if show:
+            #print(1111)
             # 画出角点来进行观察
-            cv2.drawChessboardCorners(img,self.pattern_size,corners2,ret)
-            cv2.imshow('findCorners',img)
+            #cv2.drawChessboardCorners(img,self.pattern_size,corners2,ret)
+            #cv2.imshow('findCorners',img)
             if cv2.waitKey(0)==ord('s'):
                 cv2.destroyAllWindows()
 
@@ -127,6 +132,7 @@ class calibration(object):
 
     def cal(self,optimize=False):
         # 找出外部矩阵与内部矩阵
+        print(self.objpoints)
         ret,mtx,dist,rvecs,tvecs=cv2.calibrateCamera(self.objpoints,self.imgpoints,self.gray.shape[::-1],self.mtx,None)
         Hg2c=[]
         pose_list=np.array(self.pose_list)  # 这张列表里面为 w*h* shape(H)的矩阵
@@ -186,7 +192,7 @@ class calibration(object):
 
 def get_pos_rot_from_xyzq(xyzq):
     pos = np.array([xyzq[0], xyzq[1], xyzq[2]])     #x,y,z
-    rot = batch_quat_to_mat(np.array([[xyzq[3],xyzq[4], xyzq[5], xyzq[6]]]))[0]   # w,x,y,z
+    rot = batch_quat_to_mat(np.array([[xyzq[6],xyzq[3], xyzq[4], xyzq[5]]]))[0]   # w,x,y,z
     return pos, rot 
 
 class CameraL(object):
@@ -208,7 +214,7 @@ class CameraL(object):
         self.pipeline_proflie=self.pipeline.start(self.config)
         self.device=self.pipeline_proflie.get_device()
         advanced_mode=rs.rs400_advanced_mode(self.device)
-        self.mtx=self.getIntrinsics()
+        self.mtx,_=self.getIntrinsics()
         #with open(r"config/d435_high_accuracy.json", 'r') as file:
         #    json_text = file.read().strip()
         #advanced_mode.load_json(json_text)
@@ -273,21 +279,50 @@ class CameraL(object):
 
 if __name__=="__main__":
     cam=CameraL()
-    calib=calibration(cam.mtx,pattern_size=(8,6))
-
-    for i in range(10):
+    calib=calibration(cam.mtx,pattern_size=(7,4))
+    '''
+    rows=[]
+    count=1
+    while count<11:
         color,depth,_,_=cam.get_data()
         cv2.imshow("vis",color)
-        action=cv2.waitKey(-1)
-       
+        action=cv2.waitKey(30)
+        rd=mvig_kinova_reader()
+        
         if action &0xFF==ord('q'):
             break
         if action &0xFF==ord('s'):
-            print("saving the {}-th data".format(i))
-            #pos, rot = get_pos_rot_from_xyzq(flexiv.get_tcp_pose())
-            #np.save('./save/kinova/t_{}.npy'.format(i), pos)
-            #np.save('./save/kinova/r_{}.npy'.format(i), rot)
-            cv2.imwrite('../save/img/{}.jpg'.format(i), color)
+            print("saving the {}-th data".format(count))
+            row=rd.read_joint_pose()
+            print("row")
+            print(row)
+            rows.append(row)
+            print("pose")
+            print(rd.read_tool_pose())
+            pos, rot = get_pos_rot_from_xyzq(rd.read_tool_pose())
+            np.save('../save/t/t_{}.npy'.format(count), pos)
+            np.save('../save/r/r_{}.npy'.format(count), rot)
+            cv2.imwrite('../save/img/{}.jpg'.format(count), color)
+            count+=1
             continue
+            
+        
+    with open("../save/csv.txt", 'w+', newline='') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerows(rows)
+    '''
+    for i in range(10):
+        temp_r=np.load('../save/r/r_{}.npy'.format(i+1))
+        temp_t=np.load('../save/t/t_{}.npy'.format(i+1))
+        temp=rodrigues_trans2trmat(temp_r,temp_t)
+        imgtemp=cv2.imread("../save/img/{}.jpg".format(i+1))
+        calib.images.append(imgtemp)
+        calib.pose_list.append(temp)
+    print("11111111111111111111111111")
+    calib.detectAllFeature()
     
-    #for i in range(10):
+    print("=====================Flexiv_hand_eye===========================")
+    H2C=calib.cal()
+    np.save('../save/kinovaH2E.npy',H2C)
+    print(H2C)
+    
