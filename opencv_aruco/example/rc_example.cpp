@@ -37,6 +37,7 @@ int main(int argc, char * argv[]) try
     rs2::depth_frame depth = data.get_depth_frame(); ///获取深度图像数据
     rs2::video_frame color = data.get_color_frame();  ///获取彩色图像数据
     rs2::stream_profile dprofile =  depth.get_profile();
+    rs2::stream_profile cprofile =  color.get_profile();
 
     ///获取彩色相机内参
     rs2::video_stream_profile cvsprofile(cprofile);
@@ -65,7 +66,7 @@ int main(int argc, char * argv[]) try
     std::cout<<"distortion model: "<<depth_intrin.model<<std::endl;///畸变模型
 
     ///获取深度相机相对于彩色相机的外参，即变换矩阵: P_color = R * P_depth + T
-    rs2_extrinsics extrin = dprofile.get_extrinsics_to(cprofile)
+    rs2_extrinsics extrin = dprofile.get_extrinsics_to(cprofile);
     std::cout<<"\nextrinsics of depth camera to color camera: \nrotaion: "<<std::endl;
     for(int i = 0; i < 3; ++i){
         for(int j = 0; j < 3; ++j){
@@ -112,6 +113,7 @@ catch (const rs2::error & e)
     std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
     return EXIT_FAILURE;
 }
+
 catch (const std::exception& e)
 {
     std::cerr<<"Other error : " << e.what() << std::endl;

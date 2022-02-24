@@ -6,6 +6,7 @@
 #include <opencv2/opencv.hpp>
 #include <math.h>
 
+
 using namespace std;
 using namespace cv;
 
@@ -16,11 +17,20 @@ int main()
 	cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
 	cfg.enable_stream(RS2_STREAM_DEPTH, 640, 480, RS2_FORMAT_Z16, 30);
 	rs2::pipeline_profile selection = pipe.start(cfg);
+
+	//深度图对齐器
+	rs2::align align_to_depth(RS2_STREAM_DEPTH);
+	//彩色图对齐器具
+	rs2::align align_to_color(RS2_STREAM_COLOR);
+
+	//
 	bool stop = false;
 	while (!stop)
 	{
 		rs2::frameset frames;
 		frames = pipe.wait_for_frames();
+		//对齐到深度图 
+		frames=align_to_depth.process(frames);
 		//Get each frame
 		auto color_frame = frames.get_color_frame();
 		auto depth_frame = frames.get_depth_frame();

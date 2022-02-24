@@ -56,6 +56,52 @@ CMAKE_BINARY_DIR = /home/ziye01/realsence/opencv_aruco/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -111,44 +157,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ARUCOTEST
+# Target rules for targets named Intrintic
 
 # Build rule for target.
-ARUCOTEST: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ARUCOTEST
-.PHONY : ARUCOTEST
+Intrintic: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Intrintic
+.PHONY : Intrintic
 
 # fast build rule for target.
-ARUCOTEST/fast:
-	$(MAKE) -f CMakeFiles/ARUCOTEST.dir/build.make CMakeFiles/ARUCOTEST.dir/build
-.PHONY : ARUCOTEST/fast
+Intrintic/fast:
+	$(MAKE) -f src/CMakeFiles/Intrintic.dir/build.make src/CMakeFiles/Intrintic.dir/build
+.PHONY : Intrintic/fast
 
-src/createMarker.o: src/createMarker.cpp.o
+#=============================================================================
+# Target rules for targets named createMarker
 
-.PHONY : src/createMarker.o
+# Build rule for target.
+createMarker: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 createMarker
+.PHONY : createMarker
 
-# target to build an object file
-src/createMarker.cpp.o:
-	$(MAKE) -f CMakeFiles/ARUCOTEST.dir/build.make CMakeFiles/ARUCOTEST.dir/src/createMarker.cpp.o
-.PHONY : src/createMarker.cpp.o
+# fast build rule for target.
+createMarker/fast:
+	$(MAKE) -f src/CMakeFiles/createMarker.dir/build.make src/CMakeFiles/createMarker.dir/build
+.PHONY : createMarker/fast
 
-src/createMarker.i: src/createMarker.cpp.i
+#=============================================================================
+# Target rules for targets named realscene_cam_opt
 
-.PHONY : src/createMarker.i
+# Build rule for target.
+realscene_cam_opt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 realscene_cam_opt
+.PHONY : realscene_cam_opt
 
-# target to preprocess a source file
-src/createMarker.cpp.i:
-	$(MAKE) -f CMakeFiles/ARUCOTEST.dir/build.make CMakeFiles/ARUCOTEST.dir/src/createMarker.cpp.i
-.PHONY : src/createMarker.cpp.i
-
-src/createMarker.s: src/createMarker.cpp.s
-
-.PHONY : src/createMarker.s
-
-# target to generate assembly for a file
-src/createMarker.cpp.s:
-	$(MAKE) -f CMakeFiles/ARUCOTEST.dir/build.make CMakeFiles/ARUCOTEST.dir/src/createMarker.cpp.s
-.PHONY : src/createMarker.cpp.s
+# fast build rule for target.
+realscene_cam_opt/fast:
+	$(MAKE) -f src/CMakeFiles/realscene_cam_opt.dir/build.make src/CMakeFiles/realscene_cam_opt.dir/build
+.PHONY : realscene_cam_opt/fast
 
 # Help Target
 help:
@@ -156,12 +201,15 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... ARUCOTEST"
-	@echo "... src/createMarker.o"
-	@echo "... src/createMarker.i"
-	@echo "... src/createMarker.s"
+	@echo "... Intrintic"
+	@echo "... createMarker"
+	@echo "... realscene_cam_opt"
 .PHONY : help
 
 

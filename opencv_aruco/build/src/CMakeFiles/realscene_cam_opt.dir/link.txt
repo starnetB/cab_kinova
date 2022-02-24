@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,librealscene_cam_opt.so -o librealscene_cam_opt.so CMakeFiles/realscene_cam_opt.dir/realscene_cam_opt.cpp.o 

@@ -1,3 +1,15 @@
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/install/strip.dir
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/install/local.dir
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/install.dir
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/list_install_components.dir
 /home/ziye01/realsence/opencv_aruco/build/CMakeFiles/rebuild_cache.dir
 /home/ziye01/realsence/opencv_aruco/build/CMakeFiles/edit_cache.dir
-/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/ARUCOTEST.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/install/strip.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/install.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/list_install_components.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/rebuild_cache.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/edit_cache.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/install/local.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/Intrintic.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/createMarker.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/realscene_cam_opt.dir

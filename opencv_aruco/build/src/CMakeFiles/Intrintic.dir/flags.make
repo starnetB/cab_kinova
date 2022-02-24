@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/include/opencv4 
+CXX_INCLUDES = -I/home/ziye01/realsence/opencv_aruco/src/../include -isystem /usr/include/opencv4 
 
