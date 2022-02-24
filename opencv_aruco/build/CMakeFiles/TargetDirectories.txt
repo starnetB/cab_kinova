@@ -1,0 +1,3 @@
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/rebuild_cache.dir
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/edit_cache.dir
+/home/ziye01/realsence/opencv_aruco/build/CMakeFiles/ARUCOTEST.dir

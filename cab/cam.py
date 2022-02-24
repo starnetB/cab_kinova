@@ -1,6 +1,7 @@
 #!/home/ziye01/miniconda3/envs/cg/bin/python3
 import sys
-sys.path.append("/home/jaco/kinova/kinova_ws/src/kinova_client/scripts")
+#sys.path.append("/home/jaco/kinova/kinova_ws/src/kinova_client/scripts")
+sys.path.append("/home/ziye01/lees_ros/kinova_ws/src/kinova_client/scripts")
 from csv import reader
 import pyrealsense2 as rs
 import numpy as np
