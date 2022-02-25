@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/detectMarker.dir/rule:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/detectMarker.dir/rule
+.PHONY : src/CMakeFiles/detectMarker.dir/rule
+
+# Convenience name for target.
+detectMarker: src/CMakeFiles/detectMarker.dir/rule
+
+.PHONY : detectMarker
+
+# fast build rule for target.
+detectMarker/fast:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/build
+.PHONY : detectMarker/fast
+
+# Convenience name for target.
 src/CMakeFiles/Intrintic.dir/rule:
 	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/Intrintic.dir/rule
 .PHONY : src/CMakeFiles/Intrintic.dir/rule
@@ -170,6 +185,21 @@ Intrintic: src/CMakeFiles/Intrintic.dir/rule
 Intrintic/fast:
 	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/Intrintic.dir/build.make src/CMakeFiles/Intrintic.dir/build
 .PHONY : Intrintic/fast
+
+# Convenience name for target.
+src/CMakeFiles/PoseMarker.dir/rule:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/PoseMarker.dir/rule
+.PHONY : src/CMakeFiles/PoseMarker.dir/rule
+
+# Convenience name for target.
+PoseMarker: src/CMakeFiles/PoseMarker.dir/rule
+
+.PHONY : PoseMarker
+
+# fast build rule for target.
+PoseMarker/fast:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/build
+.PHONY : PoseMarker/fast
 
 # Convenience name for target.
 src/CMakeFiles/createMarker.dir/rule:
@@ -201,6 +231,33 @@ realscene_cam_opt/fast:
 	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/realscene_cam_opt.dir/build.make src/CMakeFiles/realscene_cam_opt.dir/build
 .PHONY : realscene_cam_opt/fast
 
+PoseMarker.o: PoseMarker.cpp.o
+
+.PHONY : PoseMarker.o
+
+# target to build an object file
+PoseMarker.cpp.o:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/PoseMarker.cpp.o
+.PHONY : PoseMarker.cpp.o
+
+PoseMarker.i: PoseMarker.cpp.i
+
+.PHONY : PoseMarker.i
+
+# target to preprocess a source file
+PoseMarker.cpp.i:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/PoseMarker.cpp.i
+.PHONY : PoseMarker.cpp.i
+
+PoseMarker.s: PoseMarker.cpp.s
+
+.PHONY : PoseMarker.s
+
+# target to generate assembly for a file
+PoseMarker.cpp.s:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/PoseMarker.cpp.s
+.PHONY : PoseMarker.cpp.s
+
 createMarker.o: createMarker.cpp.o
 
 .PHONY : createMarker.o
@@ -227,6 +284,33 @@ createMarker.s: createMarker.cpp.s
 createMarker.cpp.s:
 	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/createMarker.dir/build.make src/CMakeFiles/createMarker.dir/createMarker.cpp.s
 .PHONY : createMarker.cpp.s
+
+detectMarker.o: detectMarker.cpp.o
+
+.PHONY : detectMarker.o
+
+# target to build an object file
+detectMarker.cpp.o:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/detectMarker.cpp.o
+.PHONY : detectMarker.cpp.o
+
+detectMarker.i: detectMarker.cpp.i
+
+.PHONY : detectMarker.i
+
+# target to preprocess a source file
+detectMarker.cpp.i:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/detectMarker.cpp.i
+.PHONY : detectMarker.cpp.i
+
+detectMarker.s: detectMarker.cpp.s
+
+.PHONY : detectMarker.s
+
+# target to generate assembly for a file
+detectMarker.cpp.s:
+	cd /home/ziye01/realsence/opencv_aruco/build && $(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/detectMarker.cpp.s
+.PHONY : detectMarker.cpp.s
 
 realscene_cam_opt.o: realscene_cam_opt.cpp.o
 
@@ -293,13 +377,21 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... detectMarker"
 	@echo "... install/local"
 	@echo "... Intrintic"
+	@echo "... PoseMarker"
 	@echo "... createMarker"
 	@echo "... realscene_cam_opt"
+	@echo "... PoseMarker.o"
+	@echo "... PoseMarker.i"
+	@echo "... PoseMarker.s"
 	@echo "... createMarker.o"
 	@echo "... createMarker.i"
 	@echo "... createMarker.s"
+	@echo "... detectMarker.o"
+	@echo "... detectMarker.i"
+	@echo "... detectMarker.s"
 	@echo "... realscene_cam_opt.o"
 	@echo "... realscene_cam_opt.i"
 	@echo "... realscene_cam_opt.s"

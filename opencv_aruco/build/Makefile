@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named detectMarker
+
+# Build rule for target.
+detectMarker: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 detectMarker
+.PHONY : detectMarker
+
+# fast build rule for target.
+detectMarker/fast:
+	$(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/build
+.PHONY : detectMarker/fast
+
+#=============================================================================
 # Target rules for targets named Intrintic
 
 # Build rule for target.
@@ -168,6 +181,19 @@ Intrintic: cmake_check_build_system
 Intrintic/fast:
 	$(MAKE) -f src/CMakeFiles/Intrintic.dir/build.make src/CMakeFiles/Intrintic.dir/build
 .PHONY : Intrintic/fast
+
+#=============================================================================
+# Target rules for targets named PoseMarker
+
+# Build rule for target.
+PoseMarker: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 PoseMarker
+.PHONY : PoseMarker
+
+# fast build rule for target.
+PoseMarker/fast:
+	$(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/build
+.PHONY : PoseMarker/fast
 
 #=============================================================================
 # Target rules for targets named createMarker
@@ -207,7 +233,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... detectMarker"
 	@echo "... Intrintic"
+	@echo "... PoseMarker"
 	@echo "... createMarker"
 	@echo "... realscene_cam_opt"
 .PHONY : help

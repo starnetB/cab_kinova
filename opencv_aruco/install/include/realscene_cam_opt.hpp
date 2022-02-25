@@ -35,7 +35,7 @@ public:
     enum TypeOfIntrinscis{DepthIntrinsics,ColorIntrinsics};
 
     vector<Mat> getCamerFrame(align_way way);
-    void getIntrinsics(TypeOfIntrinscis type,align_way way);
+    rs2_intrinsics getIntrinsics(TypeOfIntrinscis type,align_way way);
     //重新投影图像的像素点，用于除去畸变参数
     void Project_Point_To_Pixel(float pixel[2], const struct Intrinsics * intrin, const float point[3]);
 

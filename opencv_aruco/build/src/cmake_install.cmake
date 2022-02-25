@@ -128,3 +128,59 @@ file(INSTALL DESTINATION "/home/ziye01/realsence/opencv_aruco/install/bin" TYPE 
   endif()
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/ziye01/realsence/opencv_aruco/install/bin" TYPE EXECUTABLE FILES "/home/ziye01/realsence/opencv_aruco/build/src/detectMarker")
+  if(EXISTS "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker"
+         OLD_RPATH "/home/ziye01/realsence/opencv_aruco/build/src:/usr/local/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/ziye01/realsence/opencv_aruco/install/bin" TYPE EXECUTABLE FILES "/home/ziye01/realsence/opencv_aruco/build/src/PoseMarker")
+  if(EXISTS "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker"
+         OLD_RPATH "/home/ziye01/realsence/opencv_aruco/build/src:/usr/local/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker")
+    endif()
+  endif()
+endif()
+

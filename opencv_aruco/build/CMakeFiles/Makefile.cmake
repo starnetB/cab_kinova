@@ -53,7 +53,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "src/CMakeFiles/detectMarker.dir/DependInfo.cmake"
   "src/CMakeFiles/Intrintic.dir/DependInfo.cmake"
+  "src/CMakeFiles/PoseMarker.dir/DependInfo.cmake"
   "src/CMakeFiles/createMarker.dir/DependInfo.cmake"
   "src/CMakeFiles/realscene_cam_opt.dir/DependInfo.cmake"
   )

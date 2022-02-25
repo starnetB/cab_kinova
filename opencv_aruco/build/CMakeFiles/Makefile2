@@ -71,7 +71,9 @@ clean: src/clean
 # Directory level rules for directory src
 
 # Recursive "all" directory target.
+src/all: src/CMakeFiles/detectMarker.dir/all
 src/all: src/CMakeFiles/Intrintic.dir/all
+src/all: src/CMakeFiles/PoseMarker.dir/all
 src/all: src/CMakeFiles/createMarker.dir/all
 src/all: src/CMakeFiles/realscene_cam_opt.dir/all
 
@@ -83,11 +85,40 @@ src/preinstall:
 .PHONY : src/preinstall
 
 # Recursive "clean" directory target.
+src/clean: src/CMakeFiles/detectMarker.dir/clean
 src/clean: src/CMakeFiles/Intrintic.dir/clean
+src/clean: src/CMakeFiles/PoseMarker.dir/clean
 src/clean: src/CMakeFiles/createMarker.dir/clean
 src/clean: src/CMakeFiles/realscene_cam_opt.dir/clean
 
 .PHONY : src/clean
+
+#=============================================================================
+# Target rules for target src/CMakeFiles/detectMarker.dir
+
+# All Build rule for target.
+src/CMakeFiles/detectMarker.dir/all: src/CMakeFiles/realscene_cam_opt.dir/all
+	$(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/depend
+	$(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=7,8 "Built target detectMarker"
+.PHONY : src/CMakeFiles/detectMarker.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/detectMarker.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ziye01/realsence/opencv_aruco/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/detectMarker.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ziye01/realsence/opencv_aruco/build/CMakeFiles 0
+.PHONY : src/CMakeFiles/detectMarker.dir/rule
+
+# Convenience name for target.
+detectMarker: src/CMakeFiles/detectMarker.dir/rule
+
+.PHONY : detectMarker
+
+# clean rule for target.
+src/CMakeFiles/detectMarker.dir/clean:
+	$(MAKE) -f src/CMakeFiles/detectMarker.dir/build.make src/CMakeFiles/detectMarker.dir/clean
+.PHONY : src/CMakeFiles/detectMarker.dir/clean
 
 #=============================================================================
 # Target rules for target src/CMakeFiles/Intrintic.dir
@@ -117,13 +148,40 @@ src/CMakeFiles/Intrintic.dir/clean:
 .PHONY : src/CMakeFiles/Intrintic.dir/clean
 
 #=============================================================================
+# Target rules for target src/CMakeFiles/PoseMarker.dir
+
+# All Build rule for target.
+src/CMakeFiles/PoseMarker.dir/all: src/CMakeFiles/realscene_cam_opt.dir/all
+	$(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/depend
+	$(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=3,4 "Built target PoseMarker"
+.PHONY : src/CMakeFiles/PoseMarker.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/PoseMarker.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ziye01/realsence/opencv_aruco/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/PoseMarker.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ziye01/realsence/opencv_aruco/build/CMakeFiles 0
+.PHONY : src/CMakeFiles/PoseMarker.dir/rule
+
+# Convenience name for target.
+PoseMarker: src/CMakeFiles/PoseMarker.dir/rule
+
+.PHONY : PoseMarker
+
+# clean rule for target.
+src/CMakeFiles/PoseMarker.dir/clean:
+	$(MAKE) -f src/CMakeFiles/PoseMarker.dir/build.make src/CMakeFiles/PoseMarker.dir/clean
+.PHONY : src/CMakeFiles/PoseMarker.dir/clean
+
+#=============================================================================
 # Target rules for target src/CMakeFiles/createMarker.dir
 
 # All Build rule for target.
 src/CMakeFiles/createMarker.dir/all:
 	$(MAKE) -f src/CMakeFiles/createMarker.dir/build.make src/CMakeFiles/createMarker.dir/depend
 	$(MAKE) -f src/CMakeFiles/createMarker.dir/build.make src/CMakeFiles/createMarker.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=3,4 "Built target createMarker"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=5,6 "Built target createMarker"
 .PHONY : src/CMakeFiles/createMarker.dir/all
 
 # Build rule for subdir invocation for target.
@@ -150,7 +208,7 @@ src/CMakeFiles/createMarker.dir/clean:
 src/CMakeFiles/realscene_cam_opt.dir/all:
 	$(MAKE) -f src/CMakeFiles/realscene_cam_opt.dir/build.make src/CMakeFiles/realscene_cam_opt.dir/depend
 	$(MAKE) -f src/CMakeFiles/realscene_cam_opt.dir/build.make src/CMakeFiles/realscene_cam_opt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=5,6 "Built target realscene_cam_opt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ziye01/realsence/opencv_aruco/build/CMakeFiles --progress-num=9,10 "Built target realscene_cam_opt"
 .PHONY : src/CMakeFiles/realscene_cam_opt.dir/all
 
 # Build rule for subdir invocation for target.

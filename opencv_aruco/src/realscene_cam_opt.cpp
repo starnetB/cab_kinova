@@ -97,7 +97,7 @@ void CameraOpt_mivg::Project_Point_To_Pixel(float pixel[2], const struct Intrins
     pixel[1] = y * intrin->fy + intrin->ppy;
 }
 
-void CameraOpt_mivg::getIntrinsics(TypeOfIntrinscis type,align_way way)
+rs2_intrinsics CameraOpt_mivg::getIntrinsics(TypeOfIntrinscis type,align_way way)
 {
    
      //深度图对齐器
@@ -121,21 +121,14 @@ void CameraOpt_mivg::getIntrinsics(TypeOfIntrinscis type,align_way way)
     {
         rs2::video_stream_profile dvsprofile(dprofile);
         rs2_intrinsics depth_intrin =  dvsprofile.get_intrinsics();
-        std::cout<<"\ndepth intrinsics: ";
-        std::cout<<depth_intrin.width<<"  "<<depth_intrin.height<<"  ";
-        std::cout<<depth_intrin.ppx<<"  "<<depth_intrin.ppy<<"  ";
-        std::cout<<depth_intrin.fx<<"  "<<depth_intrin.fy<<std::endl;
-        std::cout<<"coeffs: ";
-        for(auto value : depth_intrin.coeffs)
-            std::cout<<value<<"  ";
-        std::cout<<std::endl;
-        std::cout<<"distortion model: "<<depth_intrin.model<<std::endl;///畸变模型
+        return depth_intrin;
     }
     if(type==ColorIntrinsics)
     {
         rs2::video_stream_profile cvsprofile(cprofile);
         rs2_intrinsics color_intrin=cvsprofile.get_intrinsics();
-
+        return color_intrin;
+        /*
         std::cout<<"\n color intrinsics: ";
         std::cout<<color_intrin.width<<"  "<<color_intrin.height<<"  ";
         std::cout<<color_intrin.ppx<<"  "<<color_intrin.ppy<<"  ";
@@ -144,7 +137,10 @@ void CameraOpt_mivg::getIntrinsics(TypeOfIntrinscis type,align_way way)
         for(auto value : color_intrin.coeffs)
             std::cout<<value<<"  ";
         std::cout<<std::endl;
-        std::cout<<"distortion model: "<<color_intrin.model<<std::endl;///畸变模型
+        std::cout<<"distortion model: "<<color_intrin.model<<std::endl;///畸变模型*/
     }
+    rs2::video_stream_profile cvsprofile(cprofile);
+        rs2_intrinsics color_intrin=cvsprofile.get_intrinsics();
+        return color_intrin;
 }
 

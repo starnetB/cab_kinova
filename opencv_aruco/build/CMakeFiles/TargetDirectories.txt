@@ -9,7 +9,9 @@
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/list_install_components.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/rebuild_cache.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/edit_cache.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/detectMarker.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/install/local.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/Intrintic.dir
+/home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/PoseMarker.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/createMarker.dir
 /home/ziye01/realsence/opencv_aruco/build/src/CMakeFiles/realscene_cam_opt.dir

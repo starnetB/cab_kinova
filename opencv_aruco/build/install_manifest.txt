@@ -2,3 +2,5 @@
 /home/ziye01/realsence/opencv_aruco/install/lib/librealscene_cam_opt.so
 /home/ziye01/realsence/opencv_aruco/install/bin/createMarker
 /home/ziye01/realsence/opencv_aruco/install/bin/Intrintic
+/home/ziye01/realsence/opencv_aruco/install/bin/detectMarker
+/home/ziye01/realsence/opencv_aruco/install/bin/PoseMarker
