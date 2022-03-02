@@ -9,6 +9,7 @@ import cv2
 import sys
 import csv
 from read_kinova import mvig_kinova_reader
+import rospy
 
 def batch_quat_to_mat(quat):
     """Convert quaternion coefficients to rotation matrix.
@@ -57,7 +58,7 @@ def rodrigues_trans2trmat(tcp_r,tcp_t):
 
 
 class calibration(object):
-    def __init__(self,mtx,pattern_size=(7,4),square_size=0.035,hand_eye="EIH"):
+    def __init__(self,mtx,pattern_size=(4,7),square_size=0.035,hand_eye="EIH"):
         self.mtx=mtx       #内部参数
         self.pattern_size=pattern_size  #角点长宽
         self.square_size=square_size    #方格长宽单位m
@@ -112,8 +113,8 @@ class calibration(object):
         if show:
             #print(1111)
             # 画出角点来进行观察
-            #cv2.drawChessboardCorners(img,self.pattern_size,corners2,ret)
-            #cv2.imshow('findCorners',img)
+            cv2.drawChessboardCorners(img,self.pattern_size,corners2,ret)
+            cv2.imshow('findCorners',img)
             if cv2.waitKey(0)==ord('s'):
                 cv2.destroyAllWindows()
 
@@ -281,7 +282,8 @@ class CameraL(object):
 if __name__=="__main__":
     cam=CameraL()
     calib=calibration(cam.mtx,pattern_size=(7,4))
-    '''
+    rospy.init_node('reader_kinova_infomation', anonymous=True)
+    
     rows=[]
     count=1
     while count<11:
@@ -295,10 +297,7 @@ if __name__=="__main__":
         if action &0xFF==ord('s'):
             print("saving the {}-th data".format(count))
             row=rd.read_joint_pose()
-            print("row")
-            print(row)
             rows.append(row)
-            print("pose")
             print(rd.read_tool_pose())
             pos, rot = get_pos_rot_from_xyzq(rd.read_tool_pose())
             np.save('../save/t/t_{}.npy'.format(count), pos)
@@ -307,11 +306,12 @@ if __name__=="__main__":
             count+=1
             continue
             
-        
+       
     with open("../save/csv.txt", 'w+', newline='') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerows(rows)
-    '''
+      
+    
     for i in range(10):
         temp_r=np.load('../save/r/r_{}.npy'.format(i+1))
         temp_t=np.load('../save/t/t_{}.npy'.format(i+1))
@@ -319,7 +319,7 @@ if __name__=="__main__":
         imgtemp=cv2.imread("../save/img/{}.jpg".format(i+1))
         calib.images.append(imgtemp)
         calib.pose_list.append(temp)
-    print("11111111111111111111111111")
+    
     calib.detectAllFeature()
     
     print("=====================Flexiv_hand_eye===========================")

@@ -15,7 +15,7 @@ using namespace cv;
 
 int main()
 {
-    double markerlength=0.03;
+    double markerlength=0.04;
     CameraOpt_mivg mvig;
     rs2_intrinsics mvig_intrinsics=mvig.getIntrinsics(CameraOpt_mivg::DepthIntrinsics,CameraOpt_mivg::DepthToColor);
     cv::Mat intrinsics=(Mat_<double>(3,3)<<
@@ -24,28 +24,32 @@ int main()
                         0.0,    0.0      ,1             );
     
     cv::Mat distCoeffs=(cv::Mat_<double>(5,1)<<mvig_intrinsics.coeffs[0],mvig_intrinsics.coeffs[1],mvig_intrinsics.coeffs[2],mvig_intrinsics.coeffs[3],mvig_intrinsics.coeffs[4]);
-    cv::Ptr<cv::aruco::Dictionary> dictionary=cv::aruco::getPredefinedDictionary(cv::aruco::DICT_5X5_100);
+    cv::Ptr<cv::aruco::Dictionary> dictionary=cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
 
     while (true)
     {
         std::vector<int> ids;
         std::vector<std::vector<cv::Point2f>> corners;
 
-        cv::Mat imageCopy;
+        cv::Mat imageCopy,gray,gray_binary;
         std::vector<cv::Mat> MVector=mvig.getCamerFrame(CameraOpt_mivg::DepthToColor);
         MVector[0].copyTo(imageCopy);
-        cv::aruco::detectMarkers(imageCopy,dictionary,corners,ids);//检测靶标
-        //if at least one marker detected
-        
+        cv::cvtColor(imageCopy,gray,COLOR_BGR2GRAY);
+
+        cv::threshold(gray,gray_binary, 50,240, cv::THRESH_BINARY|THRESH_OTSU);
+
+        cv::aruco::detectMarkers(gray_binary,dictionary,corners,ids);//检测靶标
+      
+       
         if(ids.size()>0)
         {
-            cv::aruco::drawDetectedMarkers(imageCopy,corners,ids);//绘制检测到的靶标
+            cv::aruco::drawDetectedMarkers(gray_binary,corners,ids);//绘制检测到的靶标
             for(unsigned int i=0;i<ids.size();i++)
             {
                 std::vector<cv::Vec3d> rvecs,tvecs;
                  
                 cv::aruco::estimatePoseSingleMarkers(corners, markerlength, intrinsics, distCoeffs, rvecs, tvecs);//求解旋转矩阵rvecs和平移矩阵tvecs
-                //cv::aruco::drawAxis(imageCopy,intrinsics,distCoeffs, rvecs[i], tvecs[i], 0.1);
+                cv::aruco::drawAxis(imageCopy,intrinsics,distCoeffs, rvecs[i], tvecs[i], 0.1);
                 //3.rotation vector to eulerAngles
                 cv::Mat rmat;
                 Rodrigues(rvecs[i],rmat);

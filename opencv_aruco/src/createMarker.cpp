@@ -27,8 +27,8 @@ int main()
      * 第四个参数是输出的图像。
      * 最终，最后一个参数是一个可选的参数，它指定了Marer黑色边界的大小。这一大小与位数数目成正比。例如，值为2意味着边界的宽度将会是2的倍数。默认的值为1。
     */
-    cv::aruco::drawMarker(dictionary,23,200,markerImage,1);
-    imwrite("./aruco_tag.png",markerImage);
+    cv::aruco::drawMarker(dictionary,2,200,markerImage,1);
+    imwrite("./aruco_tag_2.png",markerImage);
     imshow("test",markerImage);
     waitKey();
     return 0;
